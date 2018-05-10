@@ -117,7 +117,7 @@ server <- function(input, output, session) {
     g <- ggplot(track$dots, aes(x,y)) +
       geom_path(data = track$inner, aes(x, y)) +
       geom_path(data = track$outer, aes(x, y)) +
-      annotate("point", x = racecar$x, racecar$y, size = 4, color = "red") +
+      annotate("point", x = racecar$x, y = racecar$y, size = 4, color = "red") +
       coord_equal() + theme_void()
 
     g
