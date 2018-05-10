@@ -99,8 +99,8 @@ server <- function(input, output, session) {
       coord_equal() + theme_void() +
       scale_x_continuous(limits = xfoc) +
       scale_y_continuous(limits = yfoc) +
-      geom_point(data = mvt, aes(x, y, fill = onCourse), size = 4, pch = 21 ) +
       annotate("point", x = racecar$x, y = racecar$y, size = 7, color = "red") +
+      geom_point(data = mvt, aes(x, y, fill = onCourse), size = 4, pch = 21 ) +
       annotate("segment", x = racecar$x, y = racecar$y,
                xend = mvt$x[5], yend = mvt$y[5],
                arrow = arrow(length = unit(0.5, "cm")),
