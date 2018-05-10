@@ -21,4 +21,7 @@ track_choices = c("Aiginio ART Greece" = "Aiginio ART Greece",
                   "Driveway Austin" = "Driveway Austin"
                  )
 
-maxSpeed <- 8
+# AI parameters ----------------------------------------------------------------
+maxTried <- 9
+nAhead <- 10
+maxSpeed <- nAhead - 1
