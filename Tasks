@@ -11,6 +11,9 @@ Then run pick_centerline.R.  Pick ends of start/finish line, then the centerline
 Go in clockwise fashion (NASCAR can suck it!).  Start centerline at start/finish and pass it
 on the far end.
 
+This needs to be redone for all of the tracks--I want a polygon centerline, not dots.  I
+also want a better start line (line, not just dots).
+
 Lastly, run c2d which "dots" the centerline and start/finish lines and outputs an RDS file
 called track.RDS.  Rename this as needed..
 
