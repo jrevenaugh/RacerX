@@ -1,0 +1,23 @@
+Racetrack Game
+
+1. Track generation
+Use inkscape or the like to rotate track.  Want start finish line to be vertical and
+along a straight portion of the track.
+
+Using png_track_1.R create a data frame of track points and data frame inner and
+outer boundaries.
+
+Then run pick_centerline.R.  Pick ends of start/finish line, then the centerline of the track.
+Go in clockwise fashion (NASCAR can suck it!).  Start centerline at start/finish and pass it
+on the far end.
+
+Lastly, run c2d which "dots" the centerline and start/finish lines and outputs an RDS file
+called track.RDS.  Rename this as needed..
+
+2. Car AI:
+Look x moves ahead and maximize some combination of distance along centerline with penalty for distance off of centerline.
+
+3. Player movement
+Simple: show grid points surrounding principle vector.  Points off track should be shown with different color.
+
+4. Observe click and apply.
