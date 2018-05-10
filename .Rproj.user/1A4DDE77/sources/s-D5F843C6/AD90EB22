@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3412639310",
+    "hash" : "2225103793",
     "id" : "AD90EB22",
-    "lastKnownWriteTime" : 1525919299,
-    "last_content_update" : 1525919299,
+    "lastKnownWriteTime" : 1525921945,
+    "last_content_update" : 1525921945937,
     "path" : "~/R-Studio/Projects/Shiny/RacerX/global.R",
     "project_path" : "global.R",
     "properties" : {
+        "cursorPosition" : "20,48",
+        "scrollLine" : "10"
     },
     "relative_order" : 1,
     "source_on_save" : false,

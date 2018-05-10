@@ -17,5 +17,6 @@ track_choices = c("Aiginio ART Greece" = "Aiginio ART Greece",
                   "Autodromo Juan y Oscar Galvez" = "Autodromo Juan y Oscar Galvez",
                   "F1 Outdoors Kart A&D" = "F1 Outdoors Kart A&D",
                   "Grand Bend Raceway" = "Grand Bend Raceway",
-                  "Gotland Ring North Circuit" = "Gotland Ring North Circuit"
+                  "Gotland Ring North Circuit" = "Gotland Ring North Circuit",
+                  "Driveway Austin" = "Driveway Austin"
                  )
