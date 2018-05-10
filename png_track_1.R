@@ -5,7 +5,7 @@ library(units)
 library(smoothr)
 
 # Read Grayscale PNG
-img <- readPNG("Tracks/Gotland Ring North Circuit.png")
+img <- readPNG("Tracks/Driveway_Austin.png")
 n <- length(img)
 
 # Threshold grayscale
@@ -18,9 +18,9 @@ track_raster <- raster(nrow = dim(img)[1], ncol = dim(img)[2], xmn = 0)
 track_raster[] <- img[,,3]
 
 # Smooth raster and apply breaks
-n_smooth <- 7 # must be odd!
+n_smooth <- 3 # must be odd!
 r3 <- focal(track_raster, w = matrix(1 / n_smooth^2, nrow = n_smooth, ncol = n_smooth))
-threshold <- 0.1 # Usually works.  May have to increase for "tight" tracks.
+threshold <- 0.5 # Usually works.  May have to increase for "tight" tracks.
 r4 <- cut(r3, breaks = c(-Inf, threshold, Inf)) - 1
 
 # Decimate raster and smooth a second time
@@ -35,7 +35,7 @@ r_poly <- rasterToPolygons(track_raster, function(x){x == 1}, dissolve = TRUE) %
   st_as_sf()
 
 # Smooth the polygons
-smoothness <- 15 # Reduce for "tight" tracks.
+smoothness <- 10 # Reduce for "tight" tracks.
 r_poly_smooth <- smooth(r_poly, method = "ksmooth", smoothness = smoothness)
 
 # Now extract the inner and outer polygons defining the track.  This step requires
