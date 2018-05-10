@@ -24,7 +24,7 @@ server <- function(input, output, session) {
 
   # Event Observers ------------------------------------------------------------
   observeEvent(c(input$reset, input$track), {
-    trackName <- paste0(input$track, ".RDS")
+    trackName <- paste0("Tracks/", input$track, ".RDS")
     rt$track <- readRDS(trackName)
     track <- rt$track
     n <- length(track$finish$x)
