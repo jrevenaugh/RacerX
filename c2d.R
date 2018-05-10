@@ -17,26 +17,9 @@ for (i in 1:(n-1)) {
 }
 i <- which(sf)
 start_finish <- data.frame(x = dots.df$x[i], y = dots.df$y[i])
+sf <- data.frame(x = rep(start_pts$x, 2), y = start_pts$y)
 
-center_mat <- centerline
-centerline <- data.frame(x = center_mat[,1], y = center_mat[,2])
-n <- length(centerline$x)
-dx <- diff(centerline$x)
-dy <- diff(centerline$y)
-cl <- rep(FALSE, length(dots.df$x))
-for (i in 1:(n-1)) {
-  for (j in 0:20) {
-    lsx <- round(centerline$x[i] + dx[i] / 20 * j, 0)
-    lsy <- round(centerline$y[i] + dy[i] / 20 * j, 0)
-    k <- which(dots.df$x == lsx & dots.df$y == lsy)
-    if (length(k) != 0) {
-      cl[k] <- TRUE
-    }
-  }
-}
-i <- which(cl)
-center_line <- data.frame(x = dots.df$x[i], y = dots.df$y[i])
 
-raceTrack <- list(dots = dots.df, inner = rt_inner, outer = rt_outer, finish = start_finish, centerline = center_line)
+raceTrack <- list(dots = dots.df, inner = rt_inner, outer = rt_outer, start = sf, finish = start_finish, centerline = cl)
 
 saveRDS(raceTrack, "track.RDS")

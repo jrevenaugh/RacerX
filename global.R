@@ -20,3 +20,5 @@ track_choices = c("Aiginio ART Greece" = "Aiginio ART Greece",
                   "Gotland Ring North Circuit" = "Gotland Ring North Circuit",
                   "Driveway Austin" = "Driveway Austin"
                  )
+
+maxSpeed <- 8

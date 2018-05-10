@@ -1,5 +1,13 @@
 require(sf)
 require(smoothr)
+source("global.R")
+
+# Set car on start line with no momentum (primary = null)
+#trackName <- paste0("Tracks/", track_choices[1], ".RDS")
+#track <- readRDS(trackName)
+#dots.df <- track$dots
+#rt_inner <- track$inner
+#rt_outer <- track$outer
 
 # Pick centerline
 dev.new(noRStudioGD = TRUE)
@@ -28,3 +36,4 @@ lines(rt_outer, type = "l")
 lines(start_pts, col = "blue")
 lines(centerline, col = "red")
 
+cl <- data.frame(x = centerline[,1], y = centerline[,2])
