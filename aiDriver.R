@@ -2,7 +2,7 @@ require(tidyverse)
 source("global.R")
 
 # Track is rt$track
-aiDriver <- function(track, racecar) {
+aiDriver <- function(track, racecar, pcar) {
 
   # Set up some local variables
   jcur <- rep(0, 9)
@@ -26,8 +26,10 @@ aiDriver <- function(track, racecar) {
       xind <- which(aiToGrid$x[j] == track$dots$x)
       yind <- which(aiToGrid$y[j] == track$dots$y)
 
+      # Require move be on track and not coincident with player car
       if (length(xind) >= 1) {
         if (any(aiToGrid$y[j] == track$dots$y[xind])) aiToGrid$onCourse[j] <- TRUE
+        if ((aiToGrid$x[j] == pcar$x) & (aiToGrid$y[j] == pcar$y)) aiToGrid$onCourse[j] <- FALSE
       }
     }
 

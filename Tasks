@@ -25,6 +25,8 @@ TASK: add variable top speed
 Simple: show grid points surrounding principle vector.  Points off track should be shown with different color.
 
 TASK: determine winner and stop race.
+TASK: need additional penalty for crashes (sit idle one round?)--this is hard since ai car movement
+follows player car decision.  Could limit primary to zero for additional rounds.  That would be easier.
 
 4. Observe click and apply.  Done (except for AI aspect).
 

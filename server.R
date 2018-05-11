@@ -9,7 +9,8 @@ server <- function(input, output, session) {
   # Reactives ------------------------------------------------------------------
   racecar <- reactiveValues(x = NA,
                             y = NA,
-                            primary = NA)
+                            primary = NA,
+                            offCourse = 0)
 
   aicar <- reactiveValues(x = NA,
                           y = NA,
@@ -19,6 +20,7 @@ server <- function(input, output, session) {
   prior <- reactiveValues(x = rep(0, nBack),
                           y = rep(0, nBack),
                           primary = matrix(0, nrow = nBack, ncol = 2),
+                          offCourse = rep(0, nBack),
                           nCurrent = 1)
 
   rt <- reactiveValues(track = NA)
@@ -44,6 +46,7 @@ server <- function(input, output, session) {
     racecar$x <- track$finish$x[1]
     racecar$y <- track$finish$y[n[1]]
     racecar$primary <- data.frame(x = 0, y = 0)
+    racecar$offCourse <- 0
     aicar$x <- track$finish$x[1]
     aicar$y <- track$finish$y[n[2]]
     aicar$primary <- data.frame(x = 0, y = 0)
@@ -53,6 +56,7 @@ server <- function(input, output, session) {
     prior$x <- rep(racecar$x, nBack)
     prior$y <- rep(racecar$y, nBack)
     prior$primary <- matrix(0, nrow = nBack, ncol = 2)
+    prior$offCourse <- rep(0, nBack)
     prior$nCurrent <- 1
   })
 
@@ -66,6 +70,7 @@ server <- function(input, output, session) {
     racecar$y <- prior$y[prior$nCurrent]
     racecar$primary$x <- prior$primary[prior$nCurrent,1]
     racecar$primary$y <- prior$primary[prior$nCurrent,2]
+    racecar$offCourse <- prior$offCourse[prior$nCurrent]
   })
 
   # Pick next position
@@ -77,6 +82,7 @@ server <- function(input, output, session) {
     # Map to moveToGrid and move player car.
     dist <- sqrt((moveToGrid$x - x)^2 + (moveToGrid$y - y)^2)
     lmove <- which.min(dist)
+    racecar$offCourse <- racecar$offCourse - 1
 
     # Determine primary vector (null if off course).
     if (moveToGrid$onCourse[lmove] == "yes") {
@@ -85,6 +91,7 @@ server <- function(input, output, session) {
     } else {
       racecar$primary$x <- 0
       racecar$primary$y <- 0
+      racecar$offCourse <- nCrashSlowDown # Set off course countdown
     }
     racecar$x <- moveToGrid$x[lmove]
     racecar$y <- moveToGrid$y[lmove]
@@ -94,12 +101,18 @@ server <- function(input, output, session) {
     prior$x[prior$nCurrent] <- racecar$x
     prior$y[prior$nCurrent] <- racecar$y
     prior$primary[prior$nCurrent,] <- c(racecar$primary$x, racecar$primary$y)
+    prior$offCourse[prior$nCurrent] <- racecar$offCourse
+
 
     # Move AI car
-    dai <- list(x = aicar$x, y = aicar$y, primary = aicar$primary, current = aicar$current)
-    aiR <- aiDriver(rt$track, dai)
+    dai <- list(x = aicar$x,
+                y = aicar$y,
+                primary = aicar$primary,
+                current = aicar$current)
+    pcar <- list(x = racecar$x, y = racecar$y)
+    aiR <- aiDriver(rt$track, dai, pcar)
     if (aiR$crashed) {
-      print("Shit")
+      print("AI car crashed.  Need to deal with this")
     } else {
       aicar$x <- aiR$r$x
       aicar$y <- aiR$r$y
