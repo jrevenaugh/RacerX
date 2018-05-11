@@ -90,6 +90,22 @@ server <- function(input, output, session) {
     racecar$primary$x <- prior$primary[prior$nCurrent,1]
     racecar$primary$y <- prior$primary[prior$nCurrent,2]
     racecar$offCourse <- prior$offCourse[prior$nCurrent]
+
+    # Move AI car
+    dai <- list(x = aicar$x,
+                y = aicar$y,
+                primary = aicar$primary,
+                current = aicar$current)
+    pcar <- list(x = racecar$x, y = racecar$y)
+    aiR <- aiDriver(rt$track, dai, pcar)
+    if (aiR$crashed) {
+      print("AI car crashed.  Need to deal with this")
+    } else {
+      aicar$x <- aiR$r$x
+      aicar$y <- aiR$r$y
+      aicar$primary <- aiR$r$primary
+      aicar$current <- aiR$r$current
+    }
   })
 
   # Pick next position
@@ -223,7 +239,13 @@ server <- function(input, output, session) {
                  "oil slicks (black circles) and the barricades (red circles).",
                  tags$br(), tags$br(),
                  "You can undo as many moves as needed if you get in trouble,",
-                 "but the blue car keeps going.")
+                 "but the blue car keeps going.",
+                 tags$br(), tags$br(),
+                 "Justin Revenaugh, U. of MN Earth Sciences.", tags$br(),
+                 "University of Minnesota", tags$br(),
+                 "justinr@umn.edu", tags$br(),
+                 "Code at: github.com/jrevenaugh/RacerX"
+                )
       ),
       easyClose = TRUE)
     )
