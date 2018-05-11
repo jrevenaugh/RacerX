@@ -54,11 +54,12 @@ aiDriver <- function(track, racecar, pcar) {
     dy <- track$centerline$y[jrange]
     jcur <- rep(0, 9)
     jdist <- rep(0, 9)
+    speedCorrection <- 0.5 + (AIprimary[i,1]^2 + AIprimary[i,2]^2)^(1/2)
     for (j in 1:9) {
       if (!AItried[i,j]) {
         dist <- (dx - aiToGrid$x[j])^2 + (dy - aiToGrid$y[j])^2
         jcur[j] <- which.min(dist)
-        jdist[j] <- dist[jcur[j]]
+        jdist[j] <- dist[jcur[j]] / speedCorrection
       }
     }
 
