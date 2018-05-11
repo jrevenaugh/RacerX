@@ -56,7 +56,7 @@ aiDriver <- function(track, racecar, pcar) {
       }
     }
 
-    # Pick options by order of centerline position (larger equals better).
+    # Pick options by order of centerline sequence (larger equals better).
     ordering <- order(jcur, decreasing = TRUE)
     for (k in ordering) {
       if (AItried[i,k]) next
@@ -80,8 +80,8 @@ aiDriver <- function(track, racecar, pcar) {
   }
 
   # Okay, we have gotten through the look ahead without crashing while attempting
-  # to maximize along-track position.  The first transitioned car position,
-  # is the one we want.  We also need it's primary vector.
+  # to maximize along-track distance.  The first transitioned car position,
+  # is the one we want.  We also need its primary vector.
   racecar$x <- AIcar[2,1]
   racecar$y <- AIcar[2,2]
   racecar$primary$x <- AIprimary[2,1]
