@@ -63,7 +63,7 @@ aiDriver <- function(track, racecar, pcar) {
     }
 
     # Pick options by order of centerline sequence (larger equals better).
-    ordering <- order(jcur - 2 * jdist, decreasing = TRUE)
+    ordering <- order(jcur - ocdPenaltyFactor * jdist, decreasing = TRUE)
     for (k in ordering) {
       if (AItried[i,k]) next
       AIprimary[i+1,1] <- aiToGrid$x[k] - AIcar[i,1]
