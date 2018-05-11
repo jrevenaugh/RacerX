@@ -30,7 +30,6 @@ aiDriver <- function(track, racecar) {
         if (any(aiToGrid$y[j] == track$dots$y[xind])) aiToGrid$onCourse[j] <- TRUE
       }
     }
-    print(aiToGrid)
 
     # Rule out crashes
     AItried[i,aiToGrid$onCourse == FALSE] <- TRUE
