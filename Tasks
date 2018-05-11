@@ -21,7 +21,14 @@ called track.RDS.  Rename this as needed..
 Look x moves ahead and maximize some combination of distance along centerline with penalty for distance off of centerline.  AI Baby Step #1 does this.  Now I need to convert this into a
 function that can be called turn by turn to update AI car position and primary vector.
 
+TASK: speed this up if possible.
+
 3. Player movement
-Simple: show grid points surrounding principle vector.  Points off track should be shown with different color.  Done.
+Simple: show grid points surrounding principle vector.  Points off track should be shown with different color.
+
+TASK: determine winner and stop race.
 
 4. Observe click and apply.  Done (except for AI aspect).
+
+TASK: clean up finish line presentation and add to inset.
+TASK: deal with car off the road.

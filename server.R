@@ -2,6 +2,8 @@
 #
 # RacerX shiny server
 
+source("aiDriver.R")
+
 server <- function(input, output, session) {
 
   # Reactives ------------------------------------------------------------------
@@ -32,6 +34,7 @@ server <- function(input, output, session) {
     # Load new track
     trackName <- paste0("Tracks/", input$track, ".RDS")
     rt$track <- readRDS(trackName)
+    rt$track$finish$x <- rt$track$finish$x[1]
     track <- rt$track
 
     # Get starting positions
@@ -85,11 +88,15 @@ server <- function(input, output, session) {
     prior$primary[prior$nCurrent,] <- c(racecar$primary$x, racecar$primary$y)
 
     # Move AI car
-    aiR <- aiDriver(track, aicar)
+    dai <- list(x = aicar$x, y = aicar$y, primary = aicar$primary, current = aicar$current)
+    aiR <- aiDriver(rt$track, dai)
     if (aiR$crashed) {
       print("Shit")
     } else {
-      aicar <- aiR$r
+      aicar$x <- aiR$r$x
+      aicar$y <- aiR$r$y
+      aicar$primary <- aiR$r$primary
+      aicar$current <- aiR$r$current
     }
   })
 

@@ -15,23 +15,25 @@ aiDriver <- function(track, racecar) {
   AItried <- matrix(FALSE, nrow = nAhead, ncol = 9)
   AIcar <- matrix(c(racecar$x, racecar$y), nrow = nAhead, ncol = 2, byrow = TRUE)
 
-
   # Start loop over look-ahead steps
   while(i < nAhead) {
-    moveToGrid <-  expand.grid(x = AIcar[i,1] + AIprimary[i,1] + gridxy,
-                               y = AIcar[i,2] + AIprimary[i,2] + gridxy)
-    moveToGrid$onCourse <- rep(FALSE, 9)
+    aiToGrid <-  expand.grid(x = AIcar[i,1] + AIprimary[i,1] + gridxy,
+                             y = AIcar[i,2] + AIprimary[i,2] + gridxy)
+    aiToGrid$onCourse <- rep(FALSE, 9)
 
     # Determine which moveTo points are on course.
     for (j in 1:9) {
-      xind <- which(moveToGrid$x[j] == track$dots$x)
+      xind <- which(aiToGrid$x[j] == track$dots$x)
+      yind <- which(aiToGrid$y[j] == track$dots$y)
+
       if (length(xind) >= 1) {
-        if (any(moveToGrid$y[j] == track$dots$y[xind])) moveToGrid$onCourse[j] <- TRUE
+        if (any(aiToGrid$y[j] == track$dots$y[xind])) aiToGrid$onCourse[j] <- TRUE
       }
     }
+    print(aiToGrid)
 
     # Rule out crashes
-    AItried[i,moveToGrid$onCourse == FALSE] <- TRUE
+    AItried[i,aiToGrid$onCourse == FALSE] <- TRUE
 
     # If no options remain, car must crash, return immediately, else go back a
     # look-ahead step and try the next option
@@ -49,7 +51,7 @@ aiDriver <- function(track, racecar) {
     jcur <- rep(0, 9)
     for (j in 1:9) {
       if (!AItried[i,j]) {
-        dist <- (dx - moveToGrid$x[j])^2 + (dy - moveToGrid$y[j])^2
+        dist <- (dx - aiToGrid$x[j])^2 + (dy - aiToGrid$y[j])^2
         jcur[j] <- which.min(dist)
       }
     }
@@ -58,8 +60,8 @@ aiDriver <- function(track, racecar) {
     ordering <- order(jcur, decreasing = TRUE)
     for (k in ordering) {
       if (AItried[i,k]) next
-      AIprimary[i+1,1] <- moveToGrid$x[k] - AIcar[i,1]
-      AIprimary[i+1,2] <- moveToGrid$y[k] - AIcar[i,2]
+      AIprimary[i+1,1] <- aiToGrid$x[k] - AIcar[i,1]
+      AIprimary[i+1,2] <- aiToGrid$y[k] - AIcar[i,2]
 
       # Limit top-end speed.  This is related to how far we look ahead
       if ((abs(AIprimary[i+1,1]) + abs(AIprimary[i+1,2])) > maxSpeed) {
@@ -71,8 +73,8 @@ aiDriver <- function(track, racecar) {
       AItried[i,k] <- TRUE
       i <- i + 1
       AIcur[i] <- jcur[k] + AIcur[i - 1] - 1
-      AIcar[i,1] <- moveToGrid$x[k]
-      AIcar[i,2] <- moveToGrid$y[k]
+      AIcar[i,1] <- aiToGrid$x[k]
+      AIcar[i,2] <- aiToGrid$y[k]
       break
     }
   }
