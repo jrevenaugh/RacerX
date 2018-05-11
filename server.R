@@ -35,6 +35,7 @@ server <- function(input, output, session) {
     trackName <- paste0("Tracks/", input$track, ".RDS")
     rt$track <- readRDS(trackName)
     rt$track$finish$x <- rt$track$finish$x[1]
+    rt$track$start$x <- rt$track$start$x[1]
     track <- rt$track
 
     # Get starting positions
@@ -76,8 +77,15 @@ server <- function(input, output, session) {
     # Map to moveToGrid and move player car.
     dist <- sqrt((moveToGrid$x - x)^2 + (moveToGrid$y - y)^2)
     lmove <- which.min(dist)
-    racecar$primary$x <- moveToGrid$x[lmove] - racecar$x
-    racecar$primary$y <- moveToGrid$y[lmove] - racecar$y
+
+    # Determine primary vector (null if off course).
+    if (moveToGrid$onCourse[lmove] == "yes") {
+      racecar$primary$x <- moveToGrid$x[lmove] - racecar$x
+      racecar$primary$y <- moveToGrid$y[lmove] - racecar$y
+    } else {
+      racecar$primary$x <- 0
+      racecar$primary$y <- 0
+    }
     racecar$x <- moveToGrid$x[lmove]
     racecar$y <- moveToGrid$y[lmove]
 
@@ -129,7 +137,7 @@ server <- function(input, output, session) {
       geom_point(data = track$dots, aes(x, y), size = 1, color = "gray50", pch = 3) +
       geom_path(data = track$inner, aes(x, y)) +
       geom_path(data = track$outer, aes(x, y)) +
-      geom_path(data = track$finish, aes(x, y), color = "black", size = 3, linetype = "dashed") +
+      geom_path(data = track$finish, aes(x, y), color = "black", size = 3) +
       coord_equal() + theme_void() +
       scale_x_continuous(limits = xfoc) +
       scale_y_continuous(limits = yfoc) +
@@ -152,6 +160,7 @@ server <- function(input, output, session) {
     g <- ggplot(track$dots, aes(x,y)) +
       geom_path(data = track$inner, aes(x, y)) +
       geom_path(data = track$outer, aes(x, y)) +
+      geom_path(data = track$finish, aes(x, y), color = "black") +
       annotate("point", x = racecar$x, y = racecar$y, size = 4, color = "red") +
       annotate("point", x = aicar$x, y = aicar$y, size = 4, color = "blue") +
       coord_equal() + theme_void()
