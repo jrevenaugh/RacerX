@@ -2,7 +2,7 @@ require(sf)
 require(smoothr)
 source("global.R")
 
-track <- readRDS("Tracks/Autodromo Hermanos Rodriguez Oval.RDS")
+track <- readRDS("Tracks/Gotland Ring North Circuit.RDS")
 dots.df <- track$dots
 rt_inner <- track$inner
 rt_outer <- track$outer

@@ -109,7 +109,7 @@ while (nMoves < 200) {
   racecar$primary$y <- AIprimary[2,2]
   racecar$current <- AIcur[2]
   nMoves <- nMoves + 1
-  if (racecar$current >= nTL - 1) {
+  if (racecar$current >= nTL) {
     print("Finished")
     break
   }
