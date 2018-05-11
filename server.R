@@ -214,12 +214,13 @@ server <- function(input, output, session) {
   observeEvent(input$help, {
     showModal(modalDialog(
       title = "Instructions",
-      HTML(paste("Guide your car around the track in as few moves as possible.",
+      HTML(paste("Guide the red car around the track in as few moves as possible.",
                  "Your car's momentum dictates where you can go.  Click any",
                  "green circle to move.  Be sure to slow down before turns, and avoid",
                  "oil slicks (black circles) and the barricades (red circles).",
                  tags$br(), tags$br(),
-                 "You can undo as many moves as needed if you get in trouble.")
+                 "You can undo as many moves as needed if you get in trouble,",
+                 "but the blue car keeps going.")
       ),
       easyClose = TRUE)
     )
