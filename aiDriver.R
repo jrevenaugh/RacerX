@@ -21,15 +21,19 @@ aiDriver <- function(track, racecar, pcar) {
                              y = AIcar[i,2] + AIprimary[i,2] + gridxy)
     aiToGrid$onCourse <- rep(FALSE, 9)
 
-    # Determine which moveTo points are on course.
+    # Determine which moveTo points are on course and not coincident with player car.
     for (j in 1:9) {
-      xind <- which(aiToGrid$x[j] == track$dots$x)
-
-      # Require move be on track and not coincident with player car
-      if (length(xind) >= 1) {
-        if (any(aiToGrid$y[j] == track$dots$y[xind])) aiToGrid$onCourse[j] <- TRUE
-        if ((aiToGrid$x[j] == pcar$x) & (aiToGrid$y[j] == pcar$y)) aiToGrid$onCourse[j] <- FALSE
+      if (aiToGrid$y[j] >= track$ymin &
+          aiToGrid$y[j] <= track$ymax &
+          aiToGrid$x[j] >= track$xmin &
+          aiToGrid$x[j] <= track$xmax) {
+        iR <- aiToGrid$y[j] - track$ymin + 1
+        iC <- aiToGrid$x[j] - track$xmin + 1
+        if (track$rstr[iR,iC] == 1) aiToGrid$onCourse[j] <- TRUE
       }
+      if (i == 1 &
+          (aiToGrid$x[j] == pcar$x) &
+          (aiToGrid$y[j] == pcar$y)) aiToGrid$onCourse[j] <- FALSE
     }
 
     # Rule out crashes

@@ -36,9 +36,25 @@ server <- function(input, output, session) {
     # Load new track
     trackName <- paste0("Tracks/", input$track, ".RDS")
     rt$track <- readRDS(trackName)
+
+    # Straighten the finish line (hanging chad from course creation)
     rt$track$finish$x <- rt$track$finish$x[1]
     rt$track$start$x <- rt$track$start$x[1]
     track <- rt$track
+
+    # Create logical raster of track (FALSE = off course).
+    xrange <- range(track$dots$x)
+    yrange <- range(track$dots$y)
+    rt$track$rstr <- matrix(FALSE, nrow = diff(yrange) + 1, ncol = diff(xrange) + 1)
+    rt$track$xmin <- xrange[1]
+    rt$track$xmax <- xrange[2]
+    rt$track$ymin <- yrange[1]
+    rt$track$ymax <- yrange[2]
+    for (i in 1:nrow(track$dots)) {
+      iR <- track$dots$y[i] - rt$track$ymin + 1
+      iC <- track$dots$x[i] - rt$track$xmin + 1
+      rt$track$rstr[iR,iC] <- TRUE
+    }
 
     # Get starting positions
     n <- length(track$finish$x)
@@ -137,11 +153,15 @@ server <- function(input, output, session) {
       moveToGrid$x <- xyg$x
       moveToGrid$y <- xyg$y
       moveToGrid$onCourse <- rep("no", 9)
+      print(track$ymin)
       for (i in 1:9) {
-        xind <- which(moveToGrid$x[i] == track$dots$x)
-        if (length(xind) >= 1) {
-          moveToGrid$onCourse[i] <- ifelse(any(moveToGrid$y[i] == track$dots$y[xind]),
-                                           "yes", "no")
+        if (moveToGrid$y[i] >= track$ymin &
+            moveToGrid$y[i] <= track$ymax &
+            moveToGrid$x[i] >= track$xmin &
+            moveToGrid$x[i] <= track$xmax) {
+          iR <- moveToGrid$y[i] - track$ymin + 1
+          iC <- moveToGrid$x[i] - track$xmin + 1
+          if (track$rstr[iR,iC] == 1) moveToGrid$onCourse[i] <- "yes"
         }
       }
       moveToGrid$onCourse <- factor(moveToGrid$onCourse, levels = c("no", "yes"))
