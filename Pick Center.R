@@ -2,8 +2,6 @@ require(sf)
 require(smoothr)
 source("global.R")
 
-# Set car on start line with no momentum (primary = null)
-#trackName <- paste0("Tracks/", track_choices[1], ".RDS")
 track <- readRDS("Tracks/Autodromo Hermanos Rodriguez Oval.RDS")
 dots.df <- track$dots
 rt_inner <- track$inner
@@ -37,3 +35,28 @@ lines(start_pts, col = "blue")
 lines(centerline, col = "red")
 
 cl <- data.frame(x = centerline[,1], y = centerline[,2])
+cl_add <- rbind(cl, data.frame(x = cl$x[2], y = cl$y[2]))
+
+# Clean up the start/finish line.
+
+n <- length(start_pts$x)
+dx <- diff(start_pts$x)
+dy <- diff(start_pts$y)
+sf <- rep(FALSE, length(dots.df$x))
+for (i in 1:(n-1)) {
+  for (j in 0:20) {
+    lsx <- round(start_pts$x[i] + dx[i] / 20 * j, 0)
+    lsy <- round(start_pts$y[i] + dy[i] / 20 * j, 0)
+    k <- which(dots.df$x == lsx & dots.df$y == lsy)
+    if (length(k) != 0) {
+      sf[k] <- TRUE
+    }
+  }
+}
+i <- which(sf)
+start_finish <- data.frame(x = dots.df$x[i], y = dots.df$y[i])
+sf <- data.frame(x = rep(start_pts$x, 2), y = start_pts$y)
+
+raceTrack <- list(dots = dots.df, inner = rt_inner, outer = rt_outer, start = sf, finish = start_finish, centerline = cl_add)
+
+saveRDS(raceTrack, "track.RDS")

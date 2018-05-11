@@ -29,7 +29,6 @@ trackName <- paste0("Tracks/", track_choices[1], ".RDS")
 rt$track <- readRDS("track.RDS")
 
 track <- rt$track
-track$centerline <- rbind(track$centerline, data.frame(x = rep(140), y = c(-58:(-53))))
 n <- length(track$finish$x)
 n <- sample(1:length(track$finish$x), 1)
 racecar$x <- track$finish$x[n]
@@ -39,13 +38,16 @@ nMoves <- 0
 jcur <- rep(0, 9)
 jdist <- rep(0, 9)
 
+nTL <- nrow(track$centerline)
+
 # Loop over moves.  Continue until car crashes or finishes race
-while (1) {
+while (nMoves < 200) {
   AIcur <- rep(racecar$current, nAhead)
   AIprimary <- matrix(c(racecar$primary$x, racecar$primary$y), nrow = nAhead, ncol = 2, byrow = TRUE)
   AItried <- matrix(FALSE, nrow = nAhead, ncol = 9)
   AIcar <- matrix(c(racecar$x, racecar$y), nrow = nAhead, ncol = 2, byrow = TRUE)
-
+#  g <- plotTrack(rt, AIcar[2,])
+#  print(g)
   i <- 1
   while(i < nAhead) {
     moveToGrid <-  expand.grid(x = AIcar[i,1] + AIprimary[i,1] + gridxy,
@@ -61,14 +63,16 @@ while (1) {
     if (sum(AItried[i,]) >= maxTried) {
       i <- i - 1
       if (i == 0) stop("Car crashed")
-      AItried[i,AItrying] <- TRUE
+#      AItried[i,AItrying] <- TRUE
       AItried[(i+1):nAhead,] <- FALSE
       next
     }
 
     # Have non-crashing options.  Choose most aggressive first, work down from there.
-    dx <- track$centerline$x[AIcur[i]:(AIcur[i] + 200)]
-    dy <- track$centerline$y[AIcur[i]:(AIcur[i] + 200)]
+
+    jrange <- seq(AIcur[i], min(AIcur[i] + 300, nTL))
+    dx <- track$centerline$x[jrange]
+    dy <- track$centerline$y[jrange]
     jcur <- rep(0, 9)
     for (j in 1:9) {
       if (!AItried[i,j]) {
@@ -105,11 +109,11 @@ while (1) {
   racecar$primary$y <- AIprimary[2,2]
   racecar$current <- AIcur[2]
   nMoves <- nMoves + 1
-  if (racecar$current >= length(track$centerline$x) - 3) {
+  if (racecar$current >= nTL - 1) {
     print("Finished")
     break
   }
-  print(nMoves)
+  print(paste(nMoves, racecar$x, racecar$y, AIcur[2]))
 }
 
 
