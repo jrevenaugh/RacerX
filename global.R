@@ -8,7 +8,7 @@ moveTo <- data.frame(x = rep(0, 3),
 
 
 # Number of undo steps available -----------------------------------------------
-nBack <- 5000
+nBack <- 500
 
 # Track collection -------------------------------------------------------------
 track_choices = c("Aiginio ART Greece" = "Aiginio ART Greece",
