@@ -58,13 +58,13 @@ server <- function(input, output, session) {
 
     # Get starting positions
     n <- length(track$finish$x)
-    n <- sample(1:length(track$finish$x), 2)
+    ps <- round(mean(track$finish$y) - 1, 0)
     racecar$x <- track$finish$x[1]
-    racecar$y <- track$finish$y[n[1]]
+    racecar$y <- ps
     racecar$primary <- data.frame(x = 0, y = 0)
     racecar$offCourse <- 0
     aicar$x <- track$finish$x[1]
-    aicar$y <- track$finish$y[n[2]]
+    aicar$y <- ps+1
     aicar$primary <- data.frame(x = 0, y = 0)
     aicar$current <- 0
 
