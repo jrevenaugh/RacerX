@@ -2,7 +2,7 @@
 options(warn = -1)
 
 # Movement parameters ----------------------------------------------------------
-gridxy <- c(-1,0,1)
+gridxy <- c(0,1,-1)
 moveTo <- data.frame(x = rep(0, 3),
                      y = rep(0, 3))
 

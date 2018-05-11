@@ -55,6 +55,8 @@ server <- function(input, output, session) {
       iC <- track$dots$x[i] - rt$track$xmin + 1
       rt$track$rstr[iR,iC] <- TRUE
     }
+    rt$track$centerline <- rbind(data.frame(x = mean(track$finish$x), y = mean(track$finish$y)),
+                                 track$centerline)
 
     # Get starting positions
     n <- length(track$finish$x)
