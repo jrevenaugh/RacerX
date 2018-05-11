@@ -5,7 +5,7 @@ library(units)
 library(smoothr)
 
 # Read Grayscale PNG
-img <- readPNG("Tracks/Driveway_Austin.png")
+img <- readPNG("Las_Vegas_Motor_Speedway_Road_Course_large.png")
 n <- length(img)
 
 # Threshold grayscale
@@ -15,7 +15,7 @@ for (i in 1:n) {
 
 # Convert to raster
 track_raster <- raster(nrow = dim(img)[1], ncol = dim(img)[2], xmn = 0)
-track_raster[] <- img[,,3]
+track_raster[] <- img
 
 # Smooth raster and apply breaks
 n_smooth <- 3 # must be odd!

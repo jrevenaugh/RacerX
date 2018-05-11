@@ -13,6 +13,7 @@ nBack <- 5000
 # Track collection -------------------------------------------------------------
 track_choices = c("Aiginio ART Greece" = "Aiginio ART Greece",
                   "Hermanos Rodriguez Oval" = "Autodromo Hermanos Rodriguez Oval",
+                  "Las Vegas Motor Speedway Road" = "Las Vegas Motor Speedway Road",
                   "Bridge Hampton Raceway" = "Bridge Hampton Raceway",
                   "Autodromo Juan y Oscar Galvez" = "Autodromo Juan y Oscar Galvez",
                   "F1 Outdoors Kart A&D" = "F1 Outdoors Kart A&D",
@@ -25,6 +26,7 @@ track_choices = c("Aiginio ART Greece" = "Aiginio ART Greece",
 maxTried <- 9
 nAhead <- 10
 maxSpeed <- nAhead - 1
+nAhead <- 12
 
 # Crash parameters -------------------------------------------------------------
 nCrashSlowDown <- 3

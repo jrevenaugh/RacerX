@@ -2,10 +2,10 @@ require(sf)
 require(smoothr)
 source("global.R")
 
-track <- readRDS("Tracks/Gotland Ring North Circuit.RDS")
-dots.df <- track$dots
-rt_inner <- track$inner
-rt_outer <- track$outer
+# track <- readRDS("Tracks/Gotland Ring North Circuit.RDS")
+# dots.df <- track$dots
+# rt_inner <- track$inner
+# rt_outer <- track$outer
 
 # Pick centerline
 dev.new(noRStudioGD = TRUE)
