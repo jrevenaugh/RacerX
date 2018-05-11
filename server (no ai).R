@@ -9,11 +9,6 @@ server <- function(input, output, session) {
                             y = NA,
                             primary = NA)
 
-  aicar <- reactiveValues(x = NA,
-                          y = NA,
-                          primary = NA,
-                          current = NA)
-
   prior <- reactiveValues(x = rep(0, nBack),
                           y = rep(0, nBack),
                           primary = matrix(0, nrow = nBack, ncol = 2),
@@ -29,23 +24,14 @@ server <- function(input, output, session) {
 
   # Event Observers ------------------------------------------------------------
   observeEvent(c(input$reset, input$track), {
-    # Load new track
     trackName <- paste0("Tracks/", input$track, ".RDS")
     rt$track <- readRDS(trackName)
     track <- rt$track
-
-    # Get starting positions
     n <- length(track$finish$x)
-    n <- sample(1:length(track$finish$x), 2)
-    racecar$x <- track$finish$x[1]
-    racecar$y <- track$finish$y[n[1]]
+    n <- sample(1:length(track$finish$x), 1)
+    racecar$x <- track$finish$x[n]
+    racecar$y <- track$finish$y[n]
     racecar$primary <- data.frame(x = 0, y = 0)
-    aicar$x <- track$finish$x[1]
-    aicar$y <- track$finish$y[n[2]]
-    aicar$primary <- data.frame(x = 0, y = 0)
-    aicar$current <- 0
-
-    # Set up undo structure
     prior$x <- rep(racecar$x, nBack)
     prior$y <- rep(racecar$y, nBack)
     prior$primary <- matrix(0, nrow = nBack, ncol = 2)
@@ -53,8 +39,7 @@ server <- function(input, output, session) {
   })
 
 
-  # Undo last move (recursive).  Note that this only undoes the player's car.
-  # AI is unaffected.  This allows you to correct a fatal error, but at a price.
+  # Undo last move (recursive)
   observeEvent(input$undo, {
     if (prior$nCurrent <= 1) return()
     prior$nCurrent <- prior$nCurrent - 1
@@ -66,31 +51,19 @@ server <- function(input, output, session) {
 
   # Pick next position
   observeEvent(input$click, {
-    # Get click location
     x <- input$click$x
     y <- input$click$y
 
-    # Map to moveToGrid and move player car.
     dist <- sqrt((moveToGrid$x - x)^2 + (moveToGrid$y - y)^2)
     lmove <- which.min(dist)
     racecar$primary$x <- moveToGrid$x[lmove] - racecar$x
     racecar$primary$y <- moveToGrid$y[lmove] - racecar$y
     racecar$x <- moveToGrid$x[lmove]
     racecar$y <- moveToGrid$y[lmove]
-
-    # Update undo structure
     prior$nCurrent <- prior$nCurrent + 1
     prior$x[prior$nCurrent] <- racecar$x
     prior$y[prior$nCurrent] <- racecar$y
     prior$primary[prior$nCurrent,] <- c(racecar$primary$x, racecar$primary$y)
-
-    # Move AI car
-    aiR <- aiDriver(track, aicar)
-    if (aiR$crashed) {
-      print("Shit")
-    } else {
-      aicar <- aiR$r
-    }
   })
 
   # Main Panel -----------------------------------------------------------------
@@ -127,7 +100,6 @@ server <- function(input, output, session) {
       scale_x_continuous(limits = xfoc) +
       scale_y_continuous(limits = yfoc) +
       annotate("point", x = racecar$x, y = racecar$y, size = 7, color = "red") +
-      annotate("point", x = aicar$x, y = aicar$y, size = 7, color = "blue") +
       geom_point(data = mvt, aes(x, y, fill = onCourse), size = 4, pch = 21 ) +
       annotate("segment", x = racecar$x, y = racecar$y,
                xend = mvt$x[5], yend = mvt$y[5],
@@ -146,7 +118,6 @@ server <- function(input, output, session) {
       geom_path(data = track$inner, aes(x, y)) +
       geom_path(data = track$outer, aes(x, y)) +
       annotate("point", x = racecar$x, y = racecar$y, size = 4, color = "red") +
-      annotate("point", x = aicar$x, y = aicar$y, size = 4, color = "blue") +
       coord_equal() + theme_void()
 
     g
