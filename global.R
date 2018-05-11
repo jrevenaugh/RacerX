@@ -26,7 +26,6 @@ track_choices = c("Aiginio ART Greece" = "Aiginio ART Greece",
 maxTried <- 9
 nAhead <- 10
 maxSpeed <- nAhead - 1
-nAhead <- 12
 
 # Crash parameters -------------------------------------------------------------
 nCrashSlowDown <- 3
