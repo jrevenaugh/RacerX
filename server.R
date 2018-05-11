@@ -53,7 +53,10 @@ server <- function(input, output, session) {
     rt$track$ymax <- yrange[2]
     j <- nr * (track$dots$x - rt$track$xmin) + track$dots$y - rt$track$ymin + 1
     rt$track$rstr[j] <- TRUE
-    rt$track$centerline <- rbind(data.frame(x = mean(track$finish$x), y = mean(track$finish$y)),
+    mx <- mean(track$finish$x)
+    my <- mean(track$finish$y)
+    rt$track$centerline <- rbind(data.frame(x = mx, y = my),
+                                 data.frame(x = mean(mx + track$centerline$x[1]), y = my),
                                  track$centerline)
 
     # Get starting positions
