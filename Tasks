@@ -18,9 +18,10 @@ Lastly, run c2d which "dots" the centerline and start/finish lines and outputs a
 called track.RDS.  Rename this as needed..
 
 2. Car AI:
-Look x moves ahead and maximize some combination of distance along centerline with penalty for distance off of centerline.
+Look x moves ahead and maximize some combination of distance along centerline with penalty for distance off of centerline.  AI Baby Step #1 does this.  Now I need to convert this into a
+function that can be called turn by turn to update AI car position and primary vector.
 
 3. Player movement
-Simple: show grid points surrounding principle vector.  Points off track should be shown with different color.
+Simple: show grid points surrounding principle vector.  Points off track should be shown with different color.  Done.
 
-4. Observe click and apply.
+4. Observe click and apply.  Done (except for AI aspect).

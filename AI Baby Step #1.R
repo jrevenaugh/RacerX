@@ -1,25 +1,6 @@
 require(tidyverse)
 source("global.R")
 
-plotTrack <- function(rt, racecar) {
-  track <- rt$track
-  xfoc <- c(racecar[1] - 30, racecar[1] + 30)
-  yfoc <- c(racecar[2] - 20, racecar[2] + 20)
-
-  g <- ggplot() +
-    geom_point(data = track$dots, aes(x, y), size = 1, color = "gray50", pch = 3) +
-    geom_path(data = track$inner, aes(x, y)) +
-    geom_path(data = track$outer, aes(x, y)) +
-    geom_path(data = track$finish, aes(x, y), color = "black", size = 3, linetype = "dashed") +
-    coord_equal() + theme_void() +
-    scale_x_continuous(limits = xfoc) +
-    scale_y_continuous(limits = yfoc) +
-    annotate("point", x = racecar[1], y = racecar[2], size = 7, color = "blue")
-
-  return(g)
-}
-
-
 
 rt <- list(track = NA)
 racecar <- list(x = NA, y = NA, current = 1, primary = NA)
@@ -31,7 +12,7 @@ rt$track <- readRDS("track.RDS")
 track <- rt$track
 n <- length(track$finish$x)
 n <- sample(1:length(track$finish$x), 1)
-racecar$x <- track$finish$x[n]
+racecar$x <- track$finish$x[1]
 racecar$y <- track$finish$y[n]
 racecar$primary <- data.frame(x = 0, y = 0)
 nMoves <- 0
