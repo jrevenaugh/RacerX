@@ -98,12 +98,12 @@ server <- function(input, output, session) {
     # Map to moveToGrid and move player car.
     dist <- sqrt((moveToGrid$x - x)^2 + (moveToGrid$y - y)^2)
     lmove <- which.min(dist)
+    racecar$offCourse <- racecar$offCourse - 1
 
     # Determine primary vector (null if off course or still under penalty).
     if (moveToGrid$onCourse[lmove] == "yes" & racecar$offCourse <= 0) {
       racecar$primary$x <- moveToGrid$x[lmove] - racecar$x
       racecar$primary$y <- moveToGrid$y[lmove] - racecar$y
-      racecar$offCourse <- racecar$offCourse - 1
     } else {
       racecar$primary$x <- 0
       racecar$primary$y <- 0
