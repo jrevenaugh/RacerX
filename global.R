@@ -2,7 +2,7 @@
 options(warn = -1)
 
 # Movement parameters ----------------------------------------------------------
-gridxy <- c(0,1,-1)
+gridxy <- c(1,-1,0)
 moveTo <- data.frame(x = rep(0, 3),
                      y = rep(0, 3))
 
@@ -27,4 +27,4 @@ nAhead <- 10
 maxSpeed <- nAhead - 1
 
 # Crash parameters -------------------------------------------------------------
-nCrashSlowDown <- 2
+nCrashSlowDown <- 3

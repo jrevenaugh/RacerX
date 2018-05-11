@@ -181,7 +181,7 @@ server <- function(input, output, session) {
       annotate("point", x = aicar$x, y = aicar$y, size = 7, color = "blue") +
       geom_point(data = mvt, aes(x, y, fill = onCourse), size = 4, pch = 21 ) +
       annotate("segment", x = racecar$x, y = racecar$y,
-               xend = mvt$x[5], yend = mvt$y[5],
+               xend = mvt$x[9], yend = mvt$y[9],
                arrow = arrow(length = unit(0.5, "cm")),
                col = "red") +
       scale_fill_manual(values = c("red", "green"), drop = FALSE) +

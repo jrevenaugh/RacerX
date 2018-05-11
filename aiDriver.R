@@ -53,15 +53,17 @@ aiDriver <- function(track, racecar, pcar) {
     dx <- track$centerline$x[jrange]
     dy <- track$centerline$y[jrange]
     jcur <- rep(0, 9)
+    jdist <- rep(0, 9)
     for (j in 1:9) {
       if (!AItried[i,j]) {
         dist <- (dx - aiToGrid$x[j])^2 + (dy - aiToGrid$y[j])^2
         jcur[j] <- which.min(dist)
+        jdist[j] <- dist[jcur[j]]
       }
     }
 
     # Pick options by order of centerline sequence (larger equals better).
-    ordering <- order(jcur, decreasing = TRUE)
+    ordering <- order(jcur - jdist, decreasing = TRUE)
     for (k in ordering) {
       if (AItried[i,k]) next
       AIprimary[i+1,1] <- aiToGrid$x[k] - AIcar[i,1]
