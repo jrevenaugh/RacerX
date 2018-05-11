@@ -153,7 +153,6 @@ server <- function(input, output, session) {
       moveToGrid$x <- xyg$x
       moveToGrid$y <- xyg$y
       moveToGrid$onCourse <- rep("no", 9)
-      print(track$ymin)
       for (i in 1:9) {
         if (moveToGrid$y[i] >= track$ymin &
             moveToGrid$y[i] <= track$ymax &
