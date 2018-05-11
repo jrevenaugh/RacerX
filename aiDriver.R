@@ -24,7 +24,6 @@ aiDriver <- function(track, racecar, pcar) {
     # Determine which moveTo points are on course.
     for (j in 1:9) {
       xind <- which(aiToGrid$x[j] == track$dots$x)
-      yind <- which(aiToGrid$y[j] == track$dots$y)
 
       # Require move be on track and not coincident with player car
       if (length(xind) >= 1) {

@@ -1,34 +1,21 @@
 Racetrack Game
 
 1. Track generation
-Use inkscape or the like to rotate track.  Want start finish line to be vertical and
-along a straight portion of the track.
-
-Using png_track_1.R create a data frame of track points and data frame inner and
-outer boundaries.
-
-Then run pick_centerline.R.  Pick ends of start/finish line, then the centerline of the track.
-Go in clockwise fashion (NASCAR can suck it!).  Start centerline at start/finish and pass it
-on the far end.
-
-This needs to be redone for all of the tracks--I want a polygon centerline, not dots.  I
-also want a better start line (line, not just dots).
-
-Lastly, run c2d which "dots" the centerline and start/finish lines and outputs an RDS file
-called track.RDS.  Rename this as needed..
+TASK: get the scripts to run from start to finish as needed now (have a three-step,
+      two-track process at present).
 
 2. Car AI:
 TASK: speed this up if possible.
 TASK: add variable top speed
 
 3. Player movement
-Simple: show grid points surrounding principle vector.  Points off track should be shown with different color.
-
 TASK: determine winner and stop race.
-TASK: need additional penalty for crashes (sit idle one round?)--this is hard since ai car movement
-follows player car decision.  Could limit primary to zero for additional rounds.  That would be easier.
+TASK: make sure offCourse penalty is working.
+TASK: speed up the onCourse search.  Right now, on-course dots are in an unordered
+      data frame.  What if instead there was a 1/0 raster of the course (plus borders),
+      then the search could be done as a indexing step--convert position to raster index
+      and check value of that one raster entry.
 
-4. Observe click and apply.  Done (except for AI aspect).
+4. Observe click and apply.
 
-TASK: clean up finish line presentation and add to inset.
 
