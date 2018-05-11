@@ -45,16 +45,14 @@ server <- function(input, output, session) {
     # Create logical raster of track (FALSE = off course).
     xrange <- range(track$dots$x)
     yrange <- range(track$dots$y)
-    rt$track$rstr <- matrix(FALSE, nrow = diff(yrange) + 1, ncol = diff(xrange) + 1)
+    nr <- diff(yrange) + 1
+    rt$track$rstr <- matrix(FALSE, nrow = nr, ncol = diff(xrange) + 1)
     rt$track$xmin <- xrange[1]
     rt$track$xmax <- xrange[2]
     rt$track$ymin <- yrange[1]
     rt$track$ymax <- yrange[2]
-    for (i in 1:nrow(track$dots)) {
-      iR <- track$dots$y[i] - rt$track$ymin + 1
-      iC <- track$dots$x[i] - rt$track$xmin + 1
-      rt$track$rstr[iR,iC] <- TRUE
-    }
+    j <- nr * (track$dots$x - rt$track$xmin) + track$dots$y - rt$track$ymin + 1
+    rt$track$rstr[j] <- TRUE
     rt$track$centerline <- rbind(data.frame(x = mean(track$finish$x), y = mean(track$finish$y)),
                                  track$centerline)
 
