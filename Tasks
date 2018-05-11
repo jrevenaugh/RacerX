@@ -10,11 +10,8 @@ TASK: add variable top speed
 
 3. Player movement
 TASK: determine winner and stop race.
-TASK: make sure offCourse penalty is working.
-TASK: speed up the onCourse search.  Right now, on-course dots are in an unordered
-      data frame.  What if instead there was a 1/0 raster of the course (plus borders),
-      then the search could be done as a indexing step--convert position to raster index
-      and check value of that one raster entry.  This would be about 20 times faster.
+TASK: add oil slicks.  Suggest that primary is forced for next move.  Maybe
+      next two?
 
 4. Observe click and apply.
 
