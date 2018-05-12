@@ -9,9 +9,11 @@ TASK: speed this up if possible.
 TASK: add variable top speed
 
 3. Player movement
-TASK: determine winner and stop race.
+TASK: determine winner and stop race.  Car is at or past finish line when it's x is less
 TASK: add oil slicks.  Suggest that primary is forced for next move.  Maybe
-      next two?
+      next two?  Probably best if AI car is set to never pass through an oil slick.
+      Draw oil patch as an oval.  It should occupy two grid dots.  Pick a dot at random,
+      then find a neighbor.  Only look at the NEWS neighbors--ignore diagonals.
 
 4. Observe click and apply.
 
