@@ -26,7 +26,7 @@ track_choices = c("Aiginio ART Greece" = "Aiginio ART Greece",
 maxTried <- 8
 nAhead <- 10
 maxSpeed <- nAhead - 1
-ocdPenaltyFactor <- 0.5 # Off centerline distance penalty factor
+ocdPenaltyFactor <- 1 # Off centerline distance penalty factor
 
 # Crash parameters -------------------------------------------------------------
 nCrashSlowDown <- 3

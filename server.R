@@ -151,7 +151,8 @@ server <- function(input, output, session) {
     pcar <- list(x = racecar$x, y = racecar$y)
     aiR <- aiDriver(rt$track, dai, pcar)
     if (aiR$crashed) {
-      print("AI car crashed.  Need to deal with this")
+      aicar$primary$x <- 0
+      aicar$primary$y <- 0
     } else {
       aicar$x <- aiR$r$x
       aicar$y <- aiR$r$y
