@@ -40,36 +40,38 @@ server <- function(input, output, session) {
     # Straighten the finish line (hanging chad from course creation)
     rt$track$finish$x <- rt$track$finish$x[1]
     rt$track$start$x <- rt$track$start$x[1]
-    track <- rt$track
 
     # Create logical raster of track (FALSE = off course).
-    xrange <- range(track$dots$x)
-    yrange <- range(track$dots$y)
+    xrange <- range(rt$track$dots$x)
+    yrange <- range(rt$track$dots$y)
     nr <- diff(yrange) + 1
     rt$track$rstr <- matrix(FALSE, nrow = nr, ncol = diff(xrange) + 1)
     rt$track$xmin <- xrange[1]
     rt$track$xmax <- xrange[2]
     rt$track$ymin <- yrange[1]
     rt$track$ymax <- yrange[2]
-    j <- nr * (track$dots$x - rt$track$xmin) + track$dots$y - rt$track$ymin + 1
+    j <- nr * (rt$track$dots$x - rt$track$xmin) + rt$track$dots$y - rt$track$ymin + 1
     rt$track$rstr[j] <- TRUE
-    mx <- mean(track$finish$x)
-    my <- mean(track$finish$y)
-    rt$track$centerline <- rbind(data.frame(x = mx, y = my),
-                                 data.frame(x = mean(mx + track$centerline$x[1]), y = my),
-                                 track$centerline)
 
     # Get starting positions
-    n <- length(track$finish$x)
-    ps <- round(mean(track$finish$y) - 1, 0)
-    racecar$x <- track$finish$x[1]
+    n <- length(rt$track$finish$x)
+    ps <- round(mean(rt$track$finish$y) - 1, 0)
+    racecar$x <- rt$track$finish$x[1]
     racecar$y <- ps
     racecar$primary <- data.frame(x = 0, y = 0)
     racecar$offCourse <- 0
-    aicar$x <- track$finish$x[1]
-    aicar$y <- ps+1
+    aicar$x <- rt$track$finish$x[1]
+    aicar$y <- ps + 1
     aicar$primary <- data.frame(x = 0, y = 0)
     aicar$current <- 0
+
+    # Assure that centerline start is conducive to a proper start for AI car.
+    mx <- mean(rt$track$finish$x)
+    i <- 1
+    while (rt$track$centerline$x[i] > mx - 1) i <- i + 1
+    rt$track$centerline <- rbind(data.frame(x = mx, y = ps + 1),
+                                 data.frame(x = mx - 1, y = ps + 1),
+                                 rt$track$centerline[-i,])
 
     # Set up undo structure
     prior$x <- rep(racecar$x, nBack)
@@ -241,7 +243,8 @@ server <- function(input, output, session) {
                  "You can undo as many moves as needed if you get in trouble,",
                  "but the blue car keeps going.",
                  tags$br(), tags$br(),
-                 "Justin Revenaugh, U. of MN Earth Sciences.", tags$br(),
+                 "Justin Revenaugh", tags$br(),
+                 "Earth Sciences", tags$br(),
                  "University of Minnesota", tags$br(),
                  "justinr@umn.edu", tags$br(),
                  "Code at: github.com/jrevenaugh/RacerX"

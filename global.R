@@ -23,10 +23,10 @@ track_choices = c("Aiginio ART Greece" = "Aiginio ART Greece",
                  )
 
 # AI parameters ----------------------------------------------------------------
-maxTried <- 9
+maxTried <- 8
 nAhead <- 10
 maxSpeed <- nAhead - 1
-ocdPenaltyFactor <- 5 # Off centerline distance penalty factor
+ocdPenaltyFactor <- 10 # Off centerline distance penalty factor
 
 # Crash parameters -------------------------------------------------------------
 nCrashSlowDown <- 3
