@@ -218,10 +218,13 @@ server <- function(input, output, session) {
     if (finished$done == TRUE) {
       if (aicar$time < racecar$time) {
         label <- paste0("Winner: Blue Car\nTime: ", round(aicar$time, 2))
+        ballColor <- "blue"
       } else {
         label <- paste0("Winner: Red Car\nTime: ", round(racecar$time, 2))
+        ballColor <- "red"
       }
       g <- ggplot() +
+           annotate("point", x = 0, y = 0, color = ballColor, size = 200, alpha = 0.4) +
            annotate("text", x = 0, y = 0, label = label, size = 20) +
            theme_void()
       return(g)
