@@ -233,8 +233,7 @@ server <- function(input, output, session) {
                     pch = 21) +
            annotate("text", x = 0, y = 0,
                     label = label,
-                    size = 20,
-                    color = ballColor) +
+                    size = 20) +
            theme_void()
       return(g)
     }
