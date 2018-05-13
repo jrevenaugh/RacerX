@@ -27,7 +27,7 @@ track_choices = c("Hermanos Rodriguez Oval" = "Autodromo Hermanos Rodriguez Oval
 maxTried <- 8
 nAhead <- 10
 maxSpeed <- nAhead - 1
-ocdPenaltyFactor <- 1 # Off centerline distance penalty factor
+ocdPenaltyFactor <- 2 # Off centerline distance penalty factor
 
 # Crash parameters -------------------------------------------------------------
 nCrashSlowDown <- 3

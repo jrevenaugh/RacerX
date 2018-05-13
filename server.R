@@ -225,7 +225,7 @@ server <- function(input, output, session) {
       }
       g <- ggplot() +
            annotate("point", x = 0, y = 0, color = ballColor, size = 200, alpha = 0.4) +
-           annotate("text", x = 0, y = 0, label = label, size = 20) +
+           annotate("text", x = 0, y = 0, label = label, size = 20, color = ballColor) +
            theme_void()
       return(g)
     }
