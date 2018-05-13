@@ -204,7 +204,7 @@ server <- function(input, output, session) {
                 current = racecar$current,
                 time = racecar$time)
     over <- raceOver(dai, dpc, rt$track, prior$nMoves)
-    if (over$finished) {
+    if (!over$finished) {
       aicar$time <- over$aicar$time
       racecar$time <- over$racecar$time
       finished$done <- TRUE
@@ -224,8 +224,17 @@ server <- function(input, output, session) {
         ballColor <- "red"
       }
       g <- ggplot() +
-           annotate("point", x = 0, y = 0, color = ballColor, size = 200, alpha = 0.4) +
-           annotate("text", x = 0, y = 0, label = label, size = 20, color = ballColor) +
+           annotation_custom(flagGrob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf ) +
+           annotate("point", x = 0, y = 0,
+                    color = ballColor,
+                    fill = "white",
+                    size = 250,
+                    alpha = 0.75,
+                    pch = 21) +
+           annotate("text", x = 0, y = 0,
+                    label = label,
+                    size = 20,
+                    color = ballColor) +
            theme_void()
       return(g)
     }

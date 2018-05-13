@@ -1,0 +1,5 @@
+require(png)
+require(grid)
+img <- readPNG( "flags.png" )
+g <- rasterGrob( img, interpolate = FALSE )
+saveRDS(g, "flags.RDS")

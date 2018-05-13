@@ -33,4 +33,4 @@ ocdPenaltyFactor <- 2.5 # Off centerline distance penalty factor
 nCrashSlowDown <- 3
 
 # Finish line flag -------------------------------------------------------------
-onGrob <- readRDS(url("https://github.com/jrevenaugh/RacerX/raw/master/flags.RDS"))
+flagGrob <- readRDS(url("https://github.com/jrevenaugh/RacerX/raw/master/flags.RDS"))
