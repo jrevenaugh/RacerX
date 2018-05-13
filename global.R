@@ -11,15 +11,16 @@ moveTo <- data.frame(x = rep(0, 3),
 nBack <- 500
 
 # Track collection -------------------------------------------------------------
-track_choices = c("Aiginio ART Greece" = "Aiginio ART Greece",
-                  "Hermanos Rodriguez Oval" = "Autodromo Hermanos Rodriguez Oval",
-                  "Las Vegas Motor Speedway Road" = "Las Vegas Motor Speedway Road",
-                  "Bridge Hampton Raceway" = "Bridge Hampton Raceway",
+track_choices = c("Hermanos Rodriguez Oval" = "Autodromo Hermanos Rodriguez Oval",
+                  "Lausitz Tri-Oval" = "Lausitz Oval",
                   "Autodromo Juan y Oscar Galvez" = "Autodromo Juan y Oscar Galvez",
                   "F1 Outdoors Kart A&D" = "F1 Outdoors Kart A&D",
                   "Grand Bend Raceway" = "Grand Bend Raceway",
+                  "Driveway Austin" = "Driveway Austin",
+                  "Aiginio ART Greece" = "Aiginio ART Greece",
+                  "Las Vegas Motor Speedway Road" = "Las Vegas Motor Speedway Road",
                   "Gotland Ring North Circuit" = "Gotland Ring North Circuit",
-                  "Driveway Austin" = "Driveway Austin"
+                  "Bridge Hampton Raceway" = "Bridge Hampton Raceway"
                  )
 
 # AI parameters ----------------------------------------------------------------

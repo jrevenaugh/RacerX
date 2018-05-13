@@ -5,7 +5,7 @@ library(units)
 library(smoothr)
 
 # Read Grayscale PNG
-img <- readPNG("Las_Vegas_Motor_Speedway_Road_Course_large.png")
+img <- readPNG("Lausitz Oval.png")
 n <- length(img)
 
 # Threshold grayscale
@@ -18,7 +18,7 @@ track_raster <- raster(nrow = dim(img)[1], ncol = dim(img)[2], xmn = 0)
 track_raster[] <- img
 
 # Smooth raster and apply breaks
-n_smooth <- 3 # must be odd!
+n_smooth <- 5 # must be odd!
 r3 <- focal(track_raster, w = matrix(1 / n_smooth^2, nrow = n_smooth, ncol = n_smooth))
 threshold <- 0.5 # Usually works.  May have to increase for "tight" tracks.
 r4 <- cut(r3, breaks = c(-Inf, threshold, Inf)) - 1
