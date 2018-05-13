@@ -204,7 +204,7 @@ server <- function(input, output, session) {
                 current = racecar$current,
                 time = racecar$time)
     over <- raceOver(dai, dpc, rt$track, prior$nMoves)
-    if (!over$finished) {
+    if (over$finished) {
       aicar$time <- over$aicar$time
       racecar$time <- over$racecar$time
       finished$done <- TRUE
