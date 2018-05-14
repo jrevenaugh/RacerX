@@ -30,7 +30,7 @@ maxSpeed <- nAhead - 1
 ocdPenaltyFactor <- 2.5 # Off centerline distance penalty factor
 
 # Crash parameters -------------------------------------------------------------
-nCrashSlowDown <- 3
+nCrashSlowDown <- 4
 
 # Finish line stuff ------------------------------------------------------------
 flagGrob <- readRDS(url("https://github.com/jrevenaugh/RacerX/raw/master/flags.RDS"))
