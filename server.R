@@ -217,23 +217,28 @@ server <- function(input, output, session) {
   output$racetrack <- renderPlot({
     if (finished$done == TRUE) {
       if (aicar$time < racecar$time) {
-        label <- paste0("Winner: Blue Car\nTime: ", round(aicar$time, 2))
+        label <- paste0("Blue Car\nTime: ", round(aicar$time, 2))
         ballColor <- "blue"
       } else {
-        label <- paste0("Winner: Red Car\nTime: ", round(racecar$time, 2))
+        label <- paste0("Red Car\nTime: ", round(racecar$time, 2))
         ballColor <- "red"
       }
       g <- ggplot() +
            annotation_custom(flagGrob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf ) +
-           annotate("point", x = 0, y = 0,
+           annotate("polygon",
+                    x = 250 / 72 * circle$x,
+                    y = 250 / 72 * circle$y,
                     color = ballColor,
                     fill = "white",
-                    size = 250,
-                    alpha = 0.75,
-                    pch = 21) +
+                    size = 6,
+                    alpha = 0.7) +
            annotate("text", x = 0, y = 0,
                     label = label,
+                    color = "black",
                     size = 20) +
+           coord_equal() +
+           xlim(-5, 5) +
+           ylim(-5, 5) +
            theme_void()
       return(g)
     }

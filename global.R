@@ -32,5 +32,7 @@ ocdPenaltyFactor <- 2.5 # Off centerline distance penalty factor
 # Crash parameters -------------------------------------------------------------
 nCrashSlowDown <- 3
 
-# Finish line flag -------------------------------------------------------------
+# Finish line stuff ------------------------------------------------------------
 flagGrob <- readRDS(url("https://github.com/jrevenaugh/RacerX/raw/master/flags.RDS"))
+angle <- seq(0, 2 * pi, length.out = 60)
+circle <- data.frame(x = cos(angle), y = sin(angle))
